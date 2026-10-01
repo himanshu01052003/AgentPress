@@ -1,0 +1,19 @@
+# Track only the files the plugin uses. Everything else in this folder (build output,
+# build.sh, WordPress.org listing assets, local AI agent configs with live API keys)
+# stays local and is never committed.
+/*
+
+# Plugin files
+!/agentpress-mcp.php
+!/uninstall.php
+!/readme.txt
+!/includes/
+!/assets/
+
+# Repository files: this rule set itself, and the GPL license GitHub adds
+!/.gitignore
+!/LICENSE
+
+# Never commit OS / editor junk, even inside plugin folders
+.DS_Store
+Thumbs.db
