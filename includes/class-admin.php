@@ -282,6 +282,16 @@ class MCP100P_Admin {
 		// whose connectors can only be added in their settings screens.
 		$verify = 'Once the server is loaded (after any restart or refresh), list the tools the "wordpress" server provides and call wp_site_info to confirm which WordPress site you are connected to.';
 
+		// Node-based clients give each address only 250 ms to connect when a host has both IPv4 and
+		// IPv6 records, so an unreachable IPv6 plus a slow IPv4 handshake fails as "fetch failed: AggregateError".
+		$host     = wp_parse_url( $url, PHP_URL_HOST );
+		$verify  .= "\n\nIf the connection fails with \"fetch failed\", \"AggregateError\", \"ETIMEDOUT\" or \"ENETUNREACH\" even though the URL opens in a browser, the cause is usually on my computer, not the site: "
+			. $host . " has an IPv6 address my network cannot reach, and the IPv4 connection takes longer than the 250 ms that Node.js gives each address. Fix it like this:\n"
+			. '1. Look up the IPv4 address of ' . $host . " (for example with nslookup, dig or ping -4).\n"
+			. "2. Check the diagnosis: a plain Node.js fetch() of the server URL fails, but the same request run with NODE_OPTIONS=--network-family-autoselection-attempt-timeout=2000 gets an HTTP response.\n"
+			. '3. Ask me to add the line "<IPv4 address> ' . $host . "\" to my hosts file (/etc/hosts on macOS and Linux, C:\\Windows\\System32\\drivers\\etc\\hosts on Windows). It needs administrator rights, so give me the exact command or steps instead of running sudo yourself.\n"
+			. '4. After I have done that, have me restart or reload the app and connect again.';
+
 		$clients['claude-code']['prompt'] = "Connect Claude Code to my WordPress site through its MCP server (AgentPress MCP).\n\n"
 			. "1. Run this command in the terminal:\n\n" . $clients['claude-code']['code'] . "\n\n"
 			. "2. Run `claude mcp list` and check that the \"wordpress\" server shows as connected.\n"
