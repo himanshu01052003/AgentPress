@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       AgentPress MCP – Connect Claude, ChatGPT & AI Agents to WordPress & WooCommerce
+ * Plugin Name:       AgentPress MCP – AI Agent Connector for Claude & ChatGPT
  * Description:       MCP server for WordPress by 100pixel.com. Connect Claude, ChatGPT, Cursor, VS Code, Gemini CLI, Windsurf and any AI agent to manage posts, media, settings, plugins and WooCommerce.
  * Version:           1.0.0
  * Requires at least: 6.4

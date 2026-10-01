@@ -1,4 +1,4 @@
-=== AgentPress MCP – Connect Claude, ChatGPT & AI Agents to WordPress & WooCommerce ===
+=== AgentPress MCP – AI Agent Connector for Claude & ChatGPT ===
 Contributors: 100pixel
 Donate link: https://100pixel.com
 Tags: mcp, ai, ai agent, chatgpt, woocommerce
@@ -127,3 +127,9 @@ Yes. Call `MCP100P_Tools::add()` on the `mcp100p_register_tools` action, or regi
 * Works with Claude, ChatGPT, Cursor, VS Code, Gemini CLI, Windsurf and any MCP client.
 * Tools for posts, pages, custom post types, taxonomies, media, users, site settings, plugins, themes, WooCommerce and the WordPress Abilities API.
 * Read-only mode, tool groups and role-based access control.
+* Setup prompts explain how to fix "fetch failed: AggregateError" connection errors.
+
+== Upgrade Notice ==
+
+= 1.0.0 =
+First release.
