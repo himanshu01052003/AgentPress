@@ -10,9 +10,10 @@
 !/includes/
 !/assets/
 
-# Repository files: this rule set itself, and the GPL license GitHub adds
+# Repository files: this rule set itself, the GPL license GitHub adds, and the GitHub README
 !/.gitignore
 !/LICENSE
+!/README.md
 
 # Never commit OS / editor junk, even inside plugin folders
 .DS_Store
