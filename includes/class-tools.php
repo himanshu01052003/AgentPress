@@ -15,7 +15,7 @@
  *         ) );
  *     } );
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

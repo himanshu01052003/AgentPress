@@ -3,19 +3,19 @@
  * MCP server over the Streamable HTTP transport (stateless, JSON responses).
  *
  * Endpoints:
- *   POST /wp-json/agentpress/v1/mcp          key in Authorization: Bearer … or X-API-Key header
- *   POST /wp-json/agentpress/v1/mcp/<key>    key in the URL, for clients that cannot send headers
+ *   POST /wp-json/mcp100p/v1/mcp          key in Authorization: Bearer … or X-API-Key header
+ *   POST /wp-json/mcp100p/v1/mcp/<key>    key in the URL, for clients that cannot send headers
  *
  * The pre-rename namespace mcp-100pixel/v1 is still registered so existing connections keep working.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;
 
 class MCP100P_Server {
 
-	const NS        = 'agentpress/v1';
+	const NS        = 'mcp100p/v1';
 	const LEGACY_NS = 'mcp-100pixel/v1';
 	const PROTOCOLS = array( '2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05' );
 
@@ -220,8 +220,8 @@ class MCP100P_Server {
 				'tools' => array( 'listChanged' => false ),
 			),
 			'serverInfo'      => array(
-				'name'    => 'agentpress-mcp',
-				'title'   => get_bloginfo( 'name' ) . ' (AgentPress MCP)',
+				'name'    => '100pixel-ai-agent-connector',
+				'title'   => get_bloginfo( 'name' ) . ' (100pixel AI Agent Connector)',
 				'version' => MCP100P_VERSION,
 			),
 			'instructions'    => $instructions,

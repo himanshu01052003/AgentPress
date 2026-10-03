@@ -5,7 +5,7 @@
  * Keys look like "mcp100p_<id>_<secret>". Only a SHA-256 hash of the secret is
  * stored; the full key is shown to the user once, right after it is created.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

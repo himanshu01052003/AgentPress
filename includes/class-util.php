@@ -2,7 +2,7 @@
 /**
  * Shared helpers for tool implementations.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

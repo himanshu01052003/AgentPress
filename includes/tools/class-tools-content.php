@@ -2,7 +2,7 @@
 /**
  * Posts, pages, custom post types and taxonomy tools.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

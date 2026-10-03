@@ -2,7 +2,7 @@
 /**
  * Plugin settings.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -17,32 +17,32 @@ class MCP100P_Settings {
 	public static function groups() {
 		return array(
 			'content'        => array(
-				'label' => __( 'Posts, pages & taxonomies', 'agentpress-mcp' ),
-				'desc'  => __( 'List, read, create, update and delete posts, pages and custom post types; manage categories, tags and terms.', 'agentpress-mcp' ),
+				'label' => __( 'Posts, pages & taxonomies', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'List, read, create, update and delete posts, pages and custom post types; manage categories, tags and terms.', '100pixel-ai-agent-connector' ),
 			),
 			'media'          => array(
-				'label' => __( 'Media library', 'agentpress-mcp' ),
-				'desc'  => __( 'List media, upload files from a URL or base64 data, edit alt text and captions, delete media.', 'agentpress-mcp' ),
+				'label' => __( 'Media library', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'List media, upload files from a URL or base64 data, edit alt text and captions, delete media.', '100pixel-ai-agent-connector' ),
 			),
 			'users'          => array(
-				'label' => __( 'Users (read-only)', 'agentpress-mcp' ),
-				'desc'  => __( 'List users and read user profiles.', 'agentpress-mcp' ),
+				'label' => __( 'Users (read-only)', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'List users and read user profiles.', '100pixel-ai-agent-connector' ),
 			),
 			'settings'       => array(
-				'label' => __( 'Site settings', 'agentpress-mcp' ),
-				'desc'  => __( 'Read and update general, reading, discussion, media and permalink settings. Admin email, site URL and registration settings are never writable.', 'agentpress-mcp' ),
+				'label' => __( 'Site settings', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'Read and update general, reading, discussion, media and permalink settings. Admin email, site URL and registration settings are never writable.', '100pixel-ai-agent-connector' ),
 			),
 			'plugins_themes' => array(
-				'label' => __( 'Plugins & themes', 'agentpress-mcp' ),
-				'desc'  => __( 'List installed plugins and themes, activate/deactivate plugins, switch themes.', 'agentpress-mcp' ),
+				'label' => __( 'Plugins & themes', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'List installed plugins and themes, activate/deactivate plugins, switch themes.', '100pixel-ai-agent-connector' ),
 			),
 			'woocommerce'    => array(
-				'label' => __( 'WooCommerce', 'agentpress-mcp' ),
-				'desc'  => __( 'Manage products and orders. Only active when WooCommerce is installed.', 'agentpress-mcp' ),
+				'label' => __( 'WooCommerce', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'Manage products and orders. Only active when WooCommerce is installed.', '100pixel-ai-agent-connector' ),
 			),
 			'abilities'      => array(
-				'label' => __( 'WordPress Abilities', 'agentpress-mcp' ),
-				'desc'  => __( 'Expose abilities registered by other plugins (Abilities API) that are marked as public for MCP.', 'agentpress-mcp' ),
+				'label' => __( 'WordPress Abilities', '100pixel-ai-agent-connector' ),
+				'desc'  => __( 'Expose abilities registered by other plugins (Abilities API) that are marked as public for MCP.', '100pixel-ai-agent-connector' ),
 			),
 		);
 	}
@@ -52,10 +52,10 @@ class MCP100P_Settings {
 	 */
 	public static function access_levels() {
 		return array(
-			'manage_options'    => __( 'Administrators only', 'agentpress-mcp' ),
-			'edit_others_posts' => __( 'Editors and above', 'agentpress-mcp' ),
-			'publish_posts'     => __( 'Authors and above', 'agentpress-mcp' ),
-			'edit_posts'        => __( 'Contributors and above', 'agentpress-mcp' ),
+			'manage_options'    => __( 'Administrators only', '100pixel-ai-agent-connector' ),
+			'edit_others_posts' => __( 'Editors and above', '100pixel-ai-agent-connector' ),
+			'publish_posts'     => __( 'Authors and above', '100pixel-ai-agent-connector' ),
+			'edit_posts'        => __( 'Contributors and above', '100pixel-ai-agent-connector' ),
 		);
 	}
 

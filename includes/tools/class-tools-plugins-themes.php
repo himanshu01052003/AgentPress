@@ -2,7 +2,7 @@
 /**
  * Plugin and theme tools.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

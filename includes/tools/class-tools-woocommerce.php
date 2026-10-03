@@ -2,7 +2,7 @@
 /**
  * WooCommerce product and order tools. Registered only when WooCommerce is active.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

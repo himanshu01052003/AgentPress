@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:       AgentPress MCP
+ * Plugin Name:       100pixel AI Agent Connector for MCP
  * Description:       MCP server for WordPress by 100pixel.com. Connect Claude, ChatGPT, Cursor, VS Code, Gemini CLI, Windsurf and any AI agent to manage posts, media, settings, plugins and WooCommerce.
  * Version:           1.0.0
  * Requires at least: 6.4
@@ -9,9 +9,9 @@
  * Author URI:        https://100pixel.com
  * License:           GPL-2.0-or-later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       agentpress-mcp
+ * Text Domain:       100pixel-ai-agent-connector
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -21,7 +21,7 @@ if ( defined( 'MCP100P_VERSION' ) ) {
 	add_action(
 		'admin_notices',
 		function () {
-			echo '<div class="notice notice-error"><p>' . esc_html__( 'Two copies of AgentPress MCP are active. Deactivate the older copy (it may be listed as "100Pixel MCP").', 'agentpress-mcp' ) . '</p></div>';
+			echo '<div class="notice notice-error"><p>' . esc_html__( 'Two copies of 100pixel AI Agent Connector are active. Deactivate the older copy (it may be listed as "100Pixel MCP").', '100pixel-ai-agent-connector' ) . '</p></div>';
 		}
 	);
 	return;

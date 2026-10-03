@@ -2,7 +2,7 @@
 /**
  * Site overview tool (always available).
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

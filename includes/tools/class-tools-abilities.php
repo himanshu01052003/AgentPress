@@ -5,7 +5,7 @@
  * Abilities whose registration sets `meta.mcp.public = true` become MCP tools named
  * "ability__<namespace>__<name>". Use the `mcp100p_expose_ability` filter to expose others.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;

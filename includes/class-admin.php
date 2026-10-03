@@ -2,14 +2,14 @@
 /**
  * Admin screen: API keys, client setup instructions and settings.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'ABSPATH' ) || exit;
 
 class MCP100P_Admin {
 
-	const SLUG = 'agentpress-mcp';
+	const SLUG = '100pixel-ai-agent-connector';
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
@@ -27,8 +27,8 @@ class MCP100P_Admin {
 
 	public static function menu() {
 		add_menu_page(
-			__( 'AgentPress MCP', 'agentpress-mcp' ),
-			__( 'AgentPress', 'agentpress-mcp' ),
+			__( '100pixel AI Agent Connector', '100pixel-ai-agent-connector' ),
+			__( 'AI Agent Connector', '100pixel-ai-agent-connector' ),
 			MCP100P_Settings::key_capability(),
 			self::SLUG,
 			array( __CLASS__, 'render' ),
@@ -38,22 +38,22 @@ class MCP100P_Admin {
 	}
 
 	/**
-	 * Monochrome AgentPress mark as a data URI; WordPress recolors it to match the admin color scheme.
+	 * Monochrome plugin mark as a data URI; WordPress recolors it to match the admin color scheme.
 	 */
 	private static function menu_icon() {
-		$svg = (string) file_get_contents( MCP100P_DIR . 'assets/agentpress-mark.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$svg = (string) file_get_contents( MCP100P_DIR . 'assets/mcp100p-mark.svg' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		return 'data:image/svg+xml;base64,' . base64_encode( $svg ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 	}
 
 	public static function row_meta( $links, $file ) {
 		if ( plugin_basename( MCP100P_FILE ) === $file ) {
-			$links[] = '<a href="https://100pixel.com" target="_blank" rel="noopener">' . esc_html__( 'Visit 100pixel.com', 'agentpress-mcp' ) . '</a>';
+			$links[] = '<a href="https://100pixel.com" target="_blank" rel="noopener">' . esc_html__( 'Visit 100pixel.com', '100pixel-ai-agent-connector' ) . '</a>';
 		}
 		return $links;
 	}
 
 	public static function action_links( $links ) {
-		array_unshift( $links, '<a href="' . esc_url( self::page_url() ) . '">' . esc_html__( 'Connect AI', 'agentpress-mcp' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( self::page_url() ) . '">' . esc_html__( 'Connect AI', '100pixel-ai-agent-connector' ) . '</a>' );
 		return $links;
 	}
 
@@ -70,9 +70,9 @@ class MCP100P_Admin {
 			'mcp100p-admin',
 			'mcp100p',
 			array(
-				'copied' => __( 'Copied!', 'agentpress-mcp' ),
-				'copy'   => __( 'Copy', 'agentpress-mcp' ),
-				'revoke' => __( 'Revoke this key? Assistants using it will be disconnected.', 'agentpress-mcp' ),
+				'copied' => __( 'Copied!', '100pixel-ai-agent-connector' ),
+				'copy'   => __( 'Copy', '100pixel-ai-agent-connector' ),
+				'revoke' => __( 'Revoke this key? Assistants using it will be disconnected.', '100pixel-ai-agent-connector' ),
 			)
 		);
 	}
@@ -82,11 +82,11 @@ class MCP100P_Admin {
 	public static function create_key() {
 		check_admin_referer( 'mcp100p_create_key' );
 		if ( ! current_user_can( MCP100P_Settings::key_capability() ) ) {
-			wp_die( esc_html__( 'You are not allowed to create API keys.', 'agentpress-mcp' ) );
+			wp_die( esc_html__( 'You are not allowed to create API keys.', '100pixel-ai-agent-connector' ) );
 		}
 
 		$label = isset( $_POST['label'] ) ? sanitize_text_field( wp_unslash( $_POST['label'] ) ) : '';
-		$label = '' !== $label ? $label : __( 'AI agent', 'agentpress-mcp' );
+		$label = '' !== $label ? $label : __( 'AI agent', '100pixel-ai-agent-connector' );
 		$key   = MCP100P_Auth::create( get_current_user_id(), $label );
 
 		set_transient( 'mcp100p_new_key_' . get_current_user_id(), $key, 10 * MINUTE_IN_SECONDS );
@@ -105,7 +105,7 @@ class MCP100P_Admin {
 	public static function save_settings() {
 		check_admin_referer( 'mcp100p_save_settings' );
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( esc_html__( 'You are not allowed to change these settings.', 'agentpress-mcp' ) );
+			wp_die( esc_html__( 'You are not allowed to change these settings.', '100pixel-ai-agent-connector' ) );
 		}
 
 		// phpcs:disable WordPress.Security.NonceVerification.Missing -- verified above.
@@ -292,37 +292,37 @@ class MCP100P_Admin {
 			. '3. Ask me to add the line "<IPv4 address> ' . $host . "\" to my hosts file (/etc/hosts on macOS and Linux, C:\\Windows\\System32\\drivers\\etc\\hosts on Windows). It needs administrator rights, so give me the exact command or steps instead of running sudo yourself.\n"
 			. '4. After I have done that, have me restart or reload the app and connect again.';
 
-		$clients['claude-code']['prompt'] = "Connect Claude Code to my WordPress site through its MCP server (AgentPress MCP).\n\n"
+		$clients['claude-code']['prompt'] = "Connect Claude Code to my WordPress site through its MCP server (100pixel AI Agent Connector).\n\n"
 			. "1. Run this command in the terminal:\n\n" . $clients['claude-code']['code'] . "\n\n"
 			. "2. Run `claude mcp list` and check that the \"wordpress\" server shows as connected.\n"
 			. "3. Tell me to restart Claude Code (or start a new session) so the WordPress tools load.\n\n"
 			. $verify;
 
-		$clients['cursor']['prompt'] = "Connect Cursor to my WordPress site through its MCP server (AgentPress MCP).\n\n"
+		$clients['cursor']['prompt'] = "Connect Cursor to my WordPress site through its MCP server (100pixel AI Agent Connector).\n\n"
 			. "Create the file .cursor/mcp.json in this project, or update it if it already exists. Keep any servers that are already in it, and add this \"wordpress\" server to \"mcpServers\":\n\n"
 			. $clients['cursor']['code'] . "\n\n"
 			. "Then tell me to open Cursor Settings → MCP and enable the \"wordpress\" server if it is not already on.\n\n"
 			. $verify;
 
-		$clients['vscode']['prompt'] = "Connect VS Code (GitHub Copilot agent mode) to my WordPress site through its MCP server (AgentPress MCP).\n\n"
+		$clients['vscode']['prompt'] = "Connect VS Code (GitHub Copilot agent mode) to my WordPress site through its MCP server (100pixel AI Agent Connector).\n\n"
 			. "Create the file .vscode/mcp.json in this workspace, or update it if it already exists. Keep any servers that are already in it, and add this \"wordpress\" server to \"servers\":\n\n"
 			. $clients['vscode']['code'] . "\n\n"
 			. "Then tell me to click Start above the \"wordpress\" entry in mcp.json (or run \"MCP: List Servers\" and start it).\n\n"
 			. $verify;
 
-		$clients['gemini']['prompt'] = "Connect Gemini CLI to my WordPress site through its MCP server (AgentPress MCP).\n\n"
+		$clients['gemini']['prompt'] = "Connect Gemini CLI to my WordPress site through its MCP server (100pixel AI Agent Connector).\n\n"
 			. "Update ~/.gemini/settings.json (create it if it does not exist). Keep every existing setting and server, and add this \"wordpress\" server to \"mcpServers\":\n\n"
 			. $clients['gemini']['code'] . "\n\n"
 			. "Then tell me to restart Gemini CLI and run /mcp to check that \"wordpress\" is connected.\n\n"
 			. $verify;
 
-		$clients['windsurf']['prompt'] = "Connect Windsurf to my WordPress site through its MCP server (AgentPress MCP).\n\n"
+		$clients['windsurf']['prompt'] = "Connect Windsurf to my WordPress site through its MCP server (100pixel AI Agent Connector).\n\n"
 			. "Update ~/.codeium/windsurf/mcp_config.json (create it if it does not exist). Keep any servers that are already in it, and add this \"wordpress\" server to \"mcpServers\":\n\n"
 			. $clients['windsurf']['code'] . "\n\n"
 			. "Then tell me to refresh the MCP servers in Cascade (Plugins/MCP panel → Refresh) so the WordPress tools load.\n\n"
 			. $verify;
 
-		$clients['other']['prompt'] = "Connect to my WordPress site's MCP server (AgentPress MCP) and add it to your MCP configuration as a server named \"wordpress\".\n\n"
+		$clients['other']['prompt'] = "Connect to my WordPress site's MCP server (100pixel AI Agent Connector) and add it to your MCP configuration as a server named \"wordpress\".\n\n"
 			. "- Transport: Streamable HTTP\n"
 			. '- URL: ' . $url . "\n"
 			. '- Header: Authorization: ' . $bearer . "\n"
@@ -415,7 +415,7 @@ class MCP100P_Admin {
 		<div class="mcp100p-code<?php echo $wrap ? ' mcp100p-code--wrap' : ''; ?>">
 			<div class="mcp100p-code__bar">
 				<span><?php echo esc_html( $label ); ?></span>
-				<button type="button" class="mcp100p-copy"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span><span class="mcp100p-copy__text"><?php esc_html_e( 'Copy', 'agentpress-mcp' ); ?></span></button>
+				<button type="button" class="mcp100p-copy"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span><span class="mcp100p-copy__text"><?php esc_html_e( 'Copy', '100pixel-ai-agent-connector' ); ?></span></button>
 			</div>
 			<pre><code><?php echo esc_html( $code ); ?></code></pre>
 		</div>
@@ -448,40 +448,40 @@ class MCP100P_Admin {
 		$clients     = self::clients( $snippet_key );
 		$msg         = isset( $_GET['mcp100p_msg'] ) ? sanitize_key( wp_unslash( $_GET['mcp100p_msg'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$messages    = array(
-			'revoked'       => array( 'success', __( 'API key revoked.', 'agentpress-mcp' ) ),
-			'revoke_failed' => array( 'error', __( 'The key could not be revoked.', 'agentpress-mcp' ) ),
-			'saved'         => array( 'success', __( 'Settings saved.', 'agentpress-mcp' ) ),
+			'revoked'       => array( 'success', __( 'API key revoked.', '100pixel-ai-agent-connector' ) ),
+			'revoke_failed' => array( 'error', __( 'The key could not be revoked.', '100pixel-ai-agent-connector' ) ),
+			'saved'         => array( 'success', __( 'Settings saved.', '100pixel-ai-agent-connector' ) ),
 		);
 		?>
 		<div class="wrap mcp100p">
-			<h1 class="screen-reader-text"><?php esc_html_e( 'AgentPress MCP', 'agentpress-mcp' ); ?></h1>
+			<h1 class="screen-reader-text"><?php esc_html_e( '100pixel AI Agent Connector', '100pixel-ai-agent-connector' ); ?></h1>
 
 			<header class="mcp100p-hero">
 				<div class="mcp100p-hero__main">
-					<div class="mcp100p-hero__icon" aria-hidden="true"><?php self::print_svg( (string) file_get_contents( MCP100P_DIR . 'assets/agentpress-icon.svg' ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local plugin file. ?></div>
+					<div class="mcp100p-hero__icon" aria-hidden="true"><?php self::print_svg( (string) file_get_contents( MCP100P_DIR . 'assets/mcp100p-icon.svg' ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local plugin file. ?></div>
 					<div>
 						<div class="mcp100p-hero__title">
-							<h2><?php esc_html_e( 'AgentPress MCP', 'agentpress-mcp' ); ?></h2>
+							<h2><?php esc_html_e( '100pixel AI Agent Connector', '100pixel-ai-agent-connector' ); ?></h2>
 							<span class="mcp100p-status <?php echo $enabled ? 'is-on' : 'is-off'; ?>">
-								<?php echo $enabled ? esc_html__( 'Active', 'agentpress-mcp' ) : esc_html__( 'Disabled', 'agentpress-mcp' ); ?>
+								<?php echo $enabled ? esc_html__( 'Active', '100pixel-ai-agent-connector' ) : esc_html__( 'Disabled', '100pixel-ai-agent-connector' ); ?>
 							</span>
 						</div>
-						<a class="mcp100p-byline" href="https://100pixel.com" target="_blank" rel="noopener"><?php esc_html_e( 'by 100pixel.com', 'agentpress-mcp' ); ?></a>
-						<p><?php esc_html_e( 'Let AI assistants like Claude, ChatGPT, Cursor and Gemini work on this site. Each one connects with an API key and can only do what your WordPress account is allowed to do.', 'agentpress-mcp' ); ?></p>
+						<a class="mcp100p-byline" href="https://100pixel.com" target="_blank" rel="noopener"><?php esc_html_e( 'by 100pixel.com', '100pixel-ai-agent-connector' ); ?></a>
+						<p><?php esc_html_e( 'Let AI assistants like Claude, ChatGPT, Cursor and Gemini work on this site. Each one connects with an API key and can only do what your WordPress account is allowed to do.', '100pixel-ai-agent-connector' ); ?></p>
 					</div>
 				</div>
 				<div class="mcp100p-endpoint">
 					<?php if ( $has_key && $url_ok ) : ?>
-						<span class="mcp100p-endpoint__label"><?php esc_html_e( 'Server URL with your latest key', 'agentpress-mcp' ); ?></span>
+						<span class="mcp100p-endpoint__label"><?php esc_html_e( 'Server URL with your latest key', '100pixel-ai-agent-connector' ); ?></span>
 					<?php else : ?>
-						<span class="mcp100p-endpoint__label"><?php esc_html_e( 'Server URL', 'agentpress-mcp' ); ?></span>
+						<span class="mcp100p-endpoint__label"><?php esc_html_e( 'Server URL', '100pixel-ai-agent-connector' ); ?></span>
 					<?php endif; ?>
 					<div class="mcp100p-endpoint__row">
 						<code><?php echo esc_html( $has_key && $url_ok ? MCP100P_Server::endpoint( $latest_key ) : MCP100P_Server::endpoint() ); ?></code>
-						<button type="button" class="mcp100p-copy mcp100p-copy--icon" aria-label="<?php esc_attr_e( 'Copy server URL', 'agentpress-mcp' ); ?>"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span><span class="mcp100p-copy__text screen-reader-text"><?php esc_html_e( 'Copy', 'agentpress-mcp' ); ?></span></button>
+						<button type="button" class="mcp100p-copy mcp100p-copy--icon" aria-label="<?php esc_attr_e( 'Copy server URL', '100pixel-ai-agent-connector' ); ?>"><span class="dashicons dashicons-admin-page" aria-hidden="true"></span><span class="mcp100p-copy__text screen-reader-text"><?php esc_html_e( 'Copy', '100pixel-ai-agent-connector' ); ?></span></button>
 					</div>
 					<?php if ( ! $has_key ) : ?>
-						<a class="mcp100p-endpoint__hint" href="#mcp100p-create"><?php esc_html_e( 'Create an API key to get your ready-to-use connection URL', 'agentpress-mcp' ); ?> &rarr;</a>
+						<a class="mcp100p-endpoint__hint" href="#mcp100p-create"><?php esc_html_e( 'Create an API key to get your ready-to-use connection URL', '100pixel-ai-agent-connector' ); ?> &rarr;</a>
 					<?php endif; ?>
 				</div>
 			</header>
@@ -489,15 +489,15 @@ class MCP100P_Admin {
 			<div class="mcp100p-stats">
 				<div class="mcp100p-stat">
 					<span class="mcp100p-stat__value"><?php echo esc_html( number_format_i18n( count( $keys ) ) ); ?></span>
-					<span class="mcp100p-stat__label"><?php echo $is_admin ? esc_html__( 'API keys on this site', 'agentpress-mcp' ) : esc_html__( 'Your API keys', 'agentpress-mcp' ); ?></span>
+					<span class="mcp100p-stat__label"><?php echo $is_admin ? esc_html__( 'API keys on this site', '100pixel-ai-agent-connector' ) : esc_html__( 'Your API keys', '100pixel-ai-agent-connector' ); ?></span>
 				</div>
 				<div class="mcp100p-stat">
 					<span class="mcp100p-stat__value"><?php echo esc_html( number_format_i18n( $tool_count ) ); ?></span>
-					<span class="mcp100p-stat__label"><?php esc_html_e( 'Tools available to AI', 'agentpress-mcp' ); ?></span>
+					<span class="mcp100p-stat__label"><?php esc_html_e( 'Tools available to AI', '100pixel-ai-agent-connector' ); ?></span>
 				</div>
 				<div class="mcp100p-stat">
-					<span class="mcp100p-stat__value mcp100p-stat__value--text"><?php echo empty( $settings['read_only'] ) ? esc_html__( 'Read & write', 'agentpress-mcp' ) : esc_html__( 'Read-only', 'agentpress-mcp' ); ?></span>
-					<span class="mcp100p-stat__label"><?php esc_html_e( 'Access mode', 'agentpress-mcp' ); ?></span>
+					<span class="mcp100p-stat__value mcp100p-stat__value--text"><?php echo empty( $settings['read_only'] ) ? esc_html__( 'Read & write', '100pixel-ai-agent-connector' ) : esc_html__( 'Read-only', '100pixel-ai-agent-connector' ); ?></span>
+					<span class="mcp100p-stat__label"><?php esc_html_e( 'Access mode', '100pixel-ai-agent-connector' ); ?></span>
 				</div>
 			</div>
 
@@ -506,7 +506,7 @@ class MCP100P_Admin {
 			<?php endif; ?>
 
 			<?php if ( ! $enabled ) : ?>
-				<div class="notice notice-warning"><p><?php esc_html_e( 'MCP access is disabled. AI assistants cannot connect until an administrator turns it on in Settings below.', 'agentpress-mcp' ); ?></p></div>
+				<div class="notice notice-warning"><p><?php esc_html_e( 'MCP access is disabled. AI assistants cannot connect until an administrator turns it on in Settings below.', '100pixel-ai-agent-connector' ); ?></p></div>
 			<?php endif; ?>
 
 			<?php if ( $new_key ) : ?>
@@ -514,11 +514,11 @@ class MCP100P_Admin {
 					<div class="mcp100p-newkey__head">
 						<span class="dashicons dashicons-yes-alt" aria-hidden="true"></span>
 						<div>
-							<h2 id="mcp100p-newkey-title"><?php esc_html_e( 'Your new API key is ready', 'agentpress-mcp' ); ?></h2>
-							<p><?php esc_html_e( 'It is now your latest key: the server URL and every setup instruction below use it.', 'agentpress-mcp' ); ?></p>
+							<h2 id="mcp100p-newkey-title"><?php esc_html_e( 'Your new API key is ready', '100pixel-ai-agent-connector' ); ?></h2>
+							<p><?php esc_html_e( 'It is now your latest key: the server URL and every setup instruction below use it.', '100pixel-ai-agent-connector' ); ?></p>
 						</div>
 					</div>
-					<?php self::code_block( $new_key, __( 'API key', 'agentpress-mcp' ) ); ?>
+					<?php self::code_block( $new_key, __( 'API key', '100pixel-ai-agent-connector' ) ); ?>
 				</section>
 			<?php endif; ?>
 
@@ -526,37 +526,37 @@ class MCP100P_Admin {
 				<div class="mcp100p-card__head">
 					<span class="mcp100p-step" aria-hidden="true">1</span>
 					<div>
-						<h2 id="mcp100p-step1"><?php esc_html_e( 'Create an API key', 'agentpress-mcp' ); ?></h2>
-						<p><?php esc_html_e( 'Create one key per app or device so you can revoke them separately.', 'agentpress-mcp' ); ?></p>
+						<h2 id="mcp100p-step1"><?php esc_html_e( 'Create an API key', '100pixel-ai-agent-connector' ); ?></h2>
+						<p><?php esc_html_e( 'Create one key per app or device so you can revoke them separately.', '100pixel-ai-agent-connector' ); ?></p>
 					</div>
 				</div>
 
 				<?php if ( ! $has_key ) : ?>
 					<div class="mcp100p-callout is-info">
 						<span class="dashicons dashicons-info" aria-hidden="true"></span>
-						<p><?php esc_html_e( 'Start here: create an API key first. Your AI assistant needs it to connect, and it will be filled into the connection URL and setup instructions automatically.', 'agentpress-mcp' ); ?></p>
+						<p><?php esc_html_e( 'Start here: create an API key first. Your AI assistant needs it to connect, and it will be filled into the connection URL and setup instructions automatically.', '100pixel-ai-agent-connector' ); ?></p>
 					</div>
 				<?php endif; ?>
 				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" class="mcp100p-create" id="mcp100p-create">
 					<?php wp_nonce_field( 'mcp100p_create_key' ); ?>
 					<input type="hidden" name="action" value="mcp100p_create_key">
-					<label for="mcp100p-label" class="screen-reader-text"><?php esc_html_e( 'Key name', 'agentpress-mcp' ); ?></label>
-					<input type="text" id="mcp100p-label" name="label" maxlength="80" placeholder="<?php esc_attr_e( 'Key name, e.g. "ChatGPT" or "Claude on my laptop"', 'agentpress-mcp' ); ?>">
-					<button type="submit" class="button button-primary"><span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span><?php esc_html_e( 'Generate key', 'agentpress-mcp' ); ?></button>
+					<label for="mcp100p-label" class="screen-reader-text"><?php esc_html_e( 'Key name', '100pixel-ai-agent-connector' ); ?></label>
+					<input type="text" id="mcp100p-label" name="label" maxlength="80" placeholder="<?php esc_attr_e( 'Key name, e.g. "ChatGPT" or "Claude on my laptop"', '100pixel-ai-agent-connector' ); ?>">
+					<button type="submit" class="button button-primary"><span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span><?php esc_html_e( 'Generate key', '100pixel-ai-agent-connector' ); ?></button>
 				</form>
 
 				<?php if ( $keys ) : ?>
 					<table class="mcp100p-keys">
 						<thead>
 							<tr>
-								<th scope="col"><?php esc_html_e( 'Name', 'agentpress-mcp' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Name', '100pixel-ai-agent-connector' ); ?></th>
 								<?php if ( $is_admin ) : ?>
-									<th scope="col"><?php esc_html_e( 'User', 'agentpress-mcp' ); ?></th>
+									<th scope="col"><?php esc_html_e( 'User', '100pixel-ai-agent-connector' ); ?></th>
 								<?php endif; ?>
-								<th scope="col"><?php esc_html_e( 'Key', 'agentpress-mcp' ); ?></th>
-								<th scope="col"><?php esc_html_e( 'Created', 'agentpress-mcp' ); ?></th>
-								<th scope="col"><?php esc_html_e( 'Last used', 'agentpress-mcp' ); ?></th>
-								<th scope="col"><span class="screen-reader-text"><?php esc_html_e( 'Actions', 'agentpress-mcp' ); ?></span></th>
+								<th scope="col"><?php esc_html_e( 'Key', '100pixel-ai-agent-connector' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Created', '100pixel-ai-agent-connector' ); ?></th>
+								<th scope="col"><?php esc_html_e( 'Last used', '100pixel-ai-agent-connector' ); ?></th>
+								<th scope="col"><span class="screen-reader-text"><?php esc_html_e( 'Actions', '100pixel-ai-agent-connector' ); ?></span></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -565,26 +565,26 @@ class MCP100P_Admin {
 								$owner = get_userdata( (int) $key['user_id'] );
 								?>
 								<tr>
-									<td class="mcp100p-keys__name" data-label="<?php esc_attr_e( 'Name', 'agentpress-mcp' ); ?>"><span class="mcp100p-keys__label"><strong><?php echo esc_html( $key['label'] ); ?></strong>
+									<td class="mcp100p-keys__name" data-label="<?php esc_attr_e( 'Name', '100pixel-ai-agent-connector' ); ?>"><span class="mcp100p-keys__label"><strong><?php echo esc_html( $key['label'] ); ?></strong>
 									<?php
 									if ( $id === $latest_id ) :
 										?>
-										<span class="mcp100p-tag is-accent"><?php esc_html_e( 'Latest · used in setup', 'agentpress-mcp' ); ?></span><?php endif; ?></span></td>
+										<span class="mcp100p-tag is-accent"><?php esc_html_e( 'Latest · used in setup', '100pixel-ai-agent-connector' ); ?></span><?php endif; ?></span></td>
 									<?php if ( $is_admin ) : ?>
-										<td data-label="<?php esc_attr_e( 'User', 'agentpress-mcp' ); ?>"><?php echo esc_html( $owner ? $owner->user_login : '—' ); ?></td>
+										<td data-label="<?php esc_attr_e( 'User', '100pixel-ai-agent-connector' ); ?>"><?php echo esc_html( $owner ? $owner->user_login : '—' ); ?></td>
 									<?php endif; ?>
-									<td data-label="<?php esc_attr_e( 'Key', 'agentpress-mcp' ); ?>"><code>mcp100p_<?php echo esc_html( $id ); ?>_…<?php echo esc_html( isset( $key['hint'] ) ? $key['hint'] : '' ); ?></code></td>
-									<td data-label="<?php esc_attr_e( 'Created', 'agentpress-mcp' ); ?>"><?php echo esc_html( wp_date( get_option( 'date_format' ), (int) $key['created'] ) ); ?></td>
-									<td data-label="<?php esc_attr_e( 'Last used', 'agentpress-mcp' ); ?>">
+									<td data-label="<?php esc_attr_e( 'Key', '100pixel-ai-agent-connector' ); ?>"><code>mcp100p_<?php echo esc_html( $id ); ?>_…<?php echo esc_html( isset( $key['hint'] ) ? $key['hint'] : '' ); ?></code></td>
+									<td data-label="<?php esc_attr_e( 'Created', '100pixel-ai-agent-connector' ); ?>"><?php echo esc_html( wp_date( get_option( 'date_format' ), (int) $key['created'] ) ); ?></td>
+									<td data-label="<?php esc_attr_e( 'Last used', '100pixel-ai-agent-connector' ); ?>">
 										<?php if ( $key['last_used'] ) : ?>
 											<span class="mcp100p-lastused"><span class="mcp100p-dot is-on" aria-hidden="true"></span>
 											<?php
 											/* translators: %s: human time difference */
-											echo esc_html( sprintf( __( '%s ago', 'agentpress-mcp' ), human_time_diff( (int) $key['last_used'] ) ) );
+											echo esc_html( sprintf( __( '%s ago', '100pixel-ai-agent-connector' ), human_time_diff( (int) $key['last_used'] ) ) );
 											?>
 											</span>
 										<?php else : ?>
-											<span class="mcp100p-lastused"><span class="mcp100p-dot" aria-hidden="true"></span><?php esc_html_e( 'Never', 'agentpress-mcp' ); ?></span>
+											<span class="mcp100p-lastused"><span class="mcp100p-dot" aria-hidden="true"></span><?php esc_html_e( 'Never', '100pixel-ai-agent-connector' ); ?></span>
 										<?php endif; ?>
 									</td>
 									<td class="mcp100p-keys__actions">
@@ -592,7 +592,7 @@ class MCP100P_Admin {
 											<?php wp_nonce_field( 'mcp100p_revoke_key' ); ?>
 											<input type="hidden" name="action" value="mcp100p_revoke_key">
 											<input type="hidden" name="key_id" value="<?php echo esc_attr( $id ); ?>">
-											<button type="submit" class="mcp100p-revoke"><span class="dashicons dashicons-trash" aria-hidden="true"></span><?php esc_html_e( 'Revoke', 'agentpress-mcp' ); ?></button>
+											<button type="submit" class="mcp100p-revoke"><span class="dashicons dashicons-trash" aria-hidden="true"></span><?php esc_html_e( 'Revoke', '100pixel-ai-agent-connector' ); ?></button>
 										</form>
 									</td>
 								</tr>
@@ -602,7 +602,7 @@ class MCP100P_Admin {
 				<?php else : ?>
 					<div class="mcp100p-empty">
 						<span class="dashicons dashicons-admin-network" aria-hidden="true"></span>
-						<p><?php esc_html_e( 'No API keys yet. Generate one above to connect your first AI assistant.', 'agentpress-mcp' ); ?></p>
+						<p><?php esc_html_e( 'No API keys yet. Generate one above to connect your first AI assistant.', '100pixel-ai-agent-connector' ); ?></p>
 					</div>
 				<?php endif; ?>
 			</section>
@@ -611,14 +611,14 @@ class MCP100P_Admin {
 				<div class="mcp100p-card__head">
 					<span class="mcp100p-step" aria-hidden="true">2</span>
 					<div>
-						<h2 id="mcp100p-step2"><?php esc_html_e( 'Connect your AI assistant', 'agentpress-mcp' ); ?></h2>
+						<h2 id="mcp100p-step2"><?php esc_html_e( 'Connect your AI assistant', '100pixel-ai-agent-connector' ); ?></h2>
 						<p>
 							<?php
 							if ( $latest_info ) {
 								/* translators: %s: API key name */
-								echo esc_html( sprintf( __( 'Pick your app. The instructions use your latest key, "%s".', 'agentpress-mcp' ), $latest_info['label'] ) );
+								echo esc_html( sprintf( __( 'Pick your app. The instructions use your latest key, "%s".', '100pixel-ai-agent-connector' ), $latest_info['label'] ) );
 							} else {
-								esc_html_e( 'You need an API key before you can connect an AI assistant.', 'agentpress-mcp' );
+								esc_html_e( 'You need an API key before you can connect an AI assistant.', '100pixel-ai-agent-connector' );
 							}
 							?>
 						</p>
@@ -628,18 +628,18 @@ class MCP100P_Admin {
 				<?php if ( ! $has_key ) : ?>
 					<div class="mcp100p-empty mcp100p-empty--cta">
 						<span class="dashicons dashicons-admin-network" aria-hidden="true"></span>
-						<p><strong><?php esc_html_e( 'Create an API key first', 'agentpress-mcp' ); ?></strong></p>
+						<p><strong><?php esc_html_e( 'Create an API key first', '100pixel-ai-agent-connector' ); ?></strong></p>
 						<p>
 							<?php
 							echo count( $own_keys )
-								? esc_html__( 'Your latest key was revoked, or was created before this page could remember keys. Create a new key and it will be filled into the connection URL and the setup steps for every AI app.', 'agentpress-mcp' )
-								: esc_html__( 'Once you have a key, this section shows step-by-step setup for Claude, ChatGPT, Cursor, VS Code, Gemini and more, with your key already filled in.', 'agentpress-mcp' );
+								? esc_html__( 'Your latest key was revoked, or was created before this page could remember keys. Create a new key and it will be filled into the connection URL and the setup steps for every AI app.', '100pixel-ai-agent-connector' )
+								: esc_html__( 'Once you have a key, this section shows step-by-step setup for Claude, ChatGPT, Cursor, VS Code, Gemini and more, with your key already filled in.', '100pixel-ai-agent-connector' );
 							?>
 						</p>
-						<a href="#mcp100p-create" class="button button-primary mcp100p-focus-create"><span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span><?php esc_html_e( 'Create API key', 'agentpress-mcp' ); ?></a>
+						<a href="#mcp100p-create" class="button button-primary mcp100p-focus-create"><span class="dashicons dashicons-plus-alt2" aria-hidden="true"></span><?php esc_html_e( 'Create API key', '100pixel-ai-agent-connector' ); ?></a>
 					</div>
 				<?php else : ?>
-				<div class="mcp100p-clients" role="tablist" aria-label="<?php esc_attr_e( 'AI apps', 'agentpress-mcp' ); ?>">
+				<div class="mcp100p-clients" role="tablist" aria-label="<?php esc_attr_e( 'AI apps', '100pixel-ai-agent-connector' ); ?>">
 					<?php
 					$first = true;
 					foreach ( $clients as $slug => $client ) :
@@ -665,7 +665,7 @@ class MCP100P_Admin {
 						<?php if ( ! empty( $client['url_key'] ) && empty( $settings['allow_url_key'] ) ) : ?>
 							<div class="mcp100p-callout is-warning">
 								<span class="dashicons dashicons-warning" aria-hidden="true"></span>
-								<p><?php esc_html_e( 'This app cannot send custom headers, so it needs the API key inside the URL. An administrator has turned that off in Settings.', 'agentpress-mcp' ); ?></p>
+								<p><?php esc_html_e( 'This app cannot send custom headers, so it needs the API key inside the URL. An administrator has turned that off in Settings.', '100pixel-ai-agent-connector' ); ?></p>
 							</div>
 						<?php else : ?>
 							<ol class="mcp100p-steps">
@@ -673,27 +673,27 @@ class MCP100P_Admin {
 									<li><?php echo wp_kses_post( $step ); ?></li>
 								<?php endforeach; ?>
 							</ol>
-							<?php self::code_block( $client['code'], ! empty( $client['url_key'] ) ? __( 'Server URL with key', 'agentpress-mcp' ) : $client['label'] ); ?>
+							<?php self::code_block( $client['code'], ! empty( $client['url_key'] ) ? __( 'Server URL with key', '100pixel-ai-agent-connector' ) : $client['label'] ); ?>
 							<?php if ( ! empty( $client['prompt'] ) ) : ?>
 								<div class="mcp100p-prompt">
 									<p class="mcp100p-prompt__intro">
 										<span class="dashicons dashicons-format-chat" aria-hidden="true"></span>
 										<span>
-											<strong><?php esc_html_e( 'Or let the AI do it:', 'agentpress-mcp' ); ?></strong>
+											<strong><?php esc_html_e( 'Or let the AI do it:', '100pixel-ai-agent-connector' ); ?></strong>
 											<?php
 											/* translators: %s: AI app name */
-											echo esc_html( sprintf( __( 'copy this setup prompt and paste it into %s\'s chat. It will connect itself.', 'agentpress-mcp' ), $client['label'] ) );
+											echo esc_html( sprintf( __( 'copy this setup prompt and paste it into %s\'s chat. It will connect itself.', '100pixel-ai-agent-connector' ), $client['label'] ) );
 											?>
 										</span>
 									</p>
-									<?php self::code_block( $client['prompt'], __( 'Setup prompt', 'agentpress-mcp' ), true ); ?>
-									<p class="mcp100p-prompt__note"><?php esc_html_e( 'The prompt contains your API key. Only paste it into your own AI app.', 'agentpress-mcp' ); ?></p>
+									<?php self::code_block( $client['prompt'], __( 'Setup prompt', '100pixel-ai-agent-connector' ), true ); ?>
+									<p class="mcp100p-prompt__note"><?php esc_html_e( 'The prompt contains your API key. Only paste it into your own AI app.', '100pixel-ai-agent-connector' ); ?></p>
 								</div>
 							<?php endif; ?>
 							<?php if ( ! empty( $client['url_key'] ) ) : ?>
 								<div class="mcp100p-callout">
 									<span class="dashicons dashicons-lock" aria-hidden="true"></span>
-									<p><?php esc_html_e( 'This URL contains your API key. Treat it like a password and do not share it.', 'agentpress-mcp' ); ?></p>
+									<p><?php esc_html_e( 'This URL contains your API key. Treat it like a password and do not share it.', '100pixel-ai-agent-connector' ); ?></p>
 								</div>
 							<?php endif; ?>
 						<?php endif; ?>
@@ -705,20 +705,20 @@ class MCP100P_Admin {
 				<?php endif; ?>
 
 				<details class="mcp100p-help">
-					<summary><?php esc_html_e( 'Trouble connecting?', 'agentpress-mcp' ); ?></summary>
+					<summary><?php esc_html_e( 'Trouble connecting?', '100pixel-ai-agent-connector' ); ?></summary>
 					<ul>
-						<li><?php esc_html_e( '"Missing API key" although you send the Authorization header: some Apache/CGI hosts strip that header. Use the X-API-Key header instead, or add this line to .htaccess:', 'agentpress-mcp' ); ?> <code>SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1</code></li>
-						<li><?php esc_html_e( '404 or blocked requests: make sure the REST API (/wp-json/) is reachable and not blocked by a security plugin, firewall or CDN rule.', 'agentpress-mcp' ); ?></li>
-						<li><?php esc_html_e( '"Invalid or revoked API key": the key was revoked, or its user no longer has a role that is allowed to use AgentPress.', 'agentpress-mcp' ); ?></li>
+						<li><?php esc_html_e( '"Missing API key" although you send the Authorization header: some Apache/CGI hosts strip that header. Use the X-API-Key header instead, or add this line to .htaccess:', '100pixel-ai-agent-connector' ); ?> <code>SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1</code></li>
+						<li><?php esc_html_e( '404 or blocked requests: make sure the REST API (/wp-json/) is reachable and not blocked by a security plugin, firewall or CDN rule.', '100pixel-ai-agent-connector' ); ?></li>
+						<li><?php esc_html_e( '"Invalid or revoked API key": the key was revoked, or its user no longer has a role that is allowed to use AI Agent Connector.', '100pixel-ai-agent-connector' ); ?></li>
 					</ul>
 				</details>
 
 				<div class="mcp100p-support">
 					<span class="dashicons dashicons-email-alt" aria-hidden="true"></span>
 					<p>
-						<strong><?php esc_html_e( 'Need help connecting the plugin to your AI / LLM?', 'agentpress-mcp' ); ?></strong>
-						<?php esc_html_e( 'Contact us:', 'agentpress-mcp' ); ?>
-						<a href="mailto:agentpress@100pixel.com">agentpress@100pixel.com</a>
+						<strong><?php esc_html_e( 'Need help connecting the plugin to your AI / LLM?', '100pixel-ai-agent-connector' ); ?></strong>
+						<?php esc_html_e( 'Contact us:', '100pixel-ai-agent-connector' ); ?>
+						<a href="mailto:support@100pixel.com">support@100pixel.com</a>
 					</p>
 				</div>
 			</section>
@@ -728,8 +728,8 @@ class MCP100P_Admin {
 					<div class="mcp100p-card__head">
 						<span class="mcp100p-step mcp100p-step--icon" aria-hidden="true"><span class="dashicons dashicons-admin-generic"></span></span>
 						<div>
-							<h2 id="mcp100p-settings-title"><?php esc_html_e( 'Settings', 'agentpress-mcp' ); ?></h2>
-							<p><?php esc_html_e( 'Control who can connect and what AI assistants are allowed to do.', 'agentpress-mcp' ); ?></p>
+							<h2 id="mcp100p-settings-title"><?php esc_html_e( 'Settings', '100pixel-ai-agent-connector' ); ?></h2>
+							<p><?php esc_html_e( 'Control who can connect and what AI assistants are allowed to do.', '100pixel-ai-agent-connector' ); ?></p>
 						</div>
 					</div>
 
@@ -740,32 +740,32 @@ class MCP100P_Admin {
 						<div class="mcp100p-settings">
 							<div class="mcp100p-setting">
 								<div class="mcp100p-setting__text">
-									<strong><?php esc_html_e( 'MCP access', 'agentpress-mcp' ); ?></strong>
-									<span><?php esc_html_e( 'Allow AI assistants to connect to this site.', 'agentpress-mcp' ); ?></span>
+									<strong><?php esc_html_e( 'MCP access', '100pixel-ai-agent-connector' ); ?></strong>
+									<span><?php esc_html_e( 'Allow AI assistants to connect to this site.', '100pixel-ai-agent-connector' ); ?></span>
 								</div>
-								<?php self::toggle( 'enabled', $settings['enabled'], __( 'MCP access', 'agentpress-mcp' ) ); ?>
+								<?php self::toggle( 'enabled', $settings['enabled'], __( 'MCP access', '100pixel-ai-agent-connector' ) ); ?>
 							</div>
 
 							<div class="mcp100p-setting">
 								<div class="mcp100p-setting__text">
-									<strong><?php esc_html_e( 'Read-only mode', 'agentpress-mcp' ); ?></strong>
-									<span><?php esc_html_e( 'Only offer tools that read data. Every tool that creates, changes or deletes is hidden.', 'agentpress-mcp' ); ?></span>
+									<strong><?php esc_html_e( 'Read-only mode', '100pixel-ai-agent-connector' ); ?></strong>
+									<span><?php esc_html_e( 'Only offer tools that read data. Every tool that creates, changes or deletes is hidden.', '100pixel-ai-agent-connector' ); ?></span>
 								</div>
-								<?php self::toggle( 'read_only', $settings['read_only'], __( 'Read-only mode', 'agentpress-mcp' ) ); ?>
+								<?php self::toggle( 'read_only', $settings['read_only'], __( 'Read-only mode', '100pixel-ai-agent-connector' ) ); ?>
 							</div>
 
 							<div class="mcp100p-setting">
 								<div class="mcp100p-setting__text">
-									<strong><?php esc_html_e( 'Key in URL', 'agentpress-mcp' ); ?></strong>
-									<span><?php esc_html_e( 'Needed for Claude web/desktop connectors and ChatGPT, which cannot send custom headers. URLs can end up in server logs, so turn this off if you only use header-based apps.', 'agentpress-mcp' ); ?></span>
+									<strong><?php esc_html_e( 'Key in URL', '100pixel-ai-agent-connector' ); ?></strong>
+									<span><?php esc_html_e( 'Needed for Claude web/desktop connectors and ChatGPT, which cannot send custom headers. URLs can end up in server logs, so turn this off if you only use header-based apps.', '100pixel-ai-agent-connector' ); ?></span>
 								</div>
-								<?php self::toggle( 'allow_url_key', $settings['allow_url_key'], __( 'Key in URL', 'agentpress-mcp' ) ); ?>
+								<?php self::toggle( 'allow_url_key', $settings['allow_url_key'], __( 'Key in URL', '100pixel-ai-agent-connector' ) ); ?>
 							</div>
 
 							<div class="mcp100p-setting mcp100p-setting--select">
 								<div class="mcp100p-setting__text">
-									<label for="mcp100p-cap"><strong><?php esc_html_e( 'Who can create keys', 'agentpress-mcp' ); ?></strong></label>
-									<span><?php esc_html_e( 'Keys of users who no longer meet this level stop working.', 'agentpress-mcp' ); ?></span>
+									<label for="mcp100p-cap"><strong><?php esc_html_e( 'Who can create keys', '100pixel-ai-agent-connector' ); ?></strong></label>
+									<span><?php esc_html_e( 'Keys of users who no longer meet this level stop working.', '100pixel-ai-agent-connector' ); ?></span>
 								</div>
 								<select id="mcp100p-cap" name="key_capability">
 									<?php foreach ( MCP100P_Settings::access_levels() as $cap => $label ) : ?>
@@ -775,17 +775,17 @@ class MCP100P_Admin {
 							</div>
 						</div>
 
-						<h3 class="mcp100p-subhead"><?php esc_html_e( 'Tool groups', 'agentpress-mcp' ); ?></h3>
-						<p class="mcp100p-muted"><?php esc_html_e( "Choose what AI assistants can work with. Every tool also checks the connected user's WordPress permissions.", 'agentpress-mcp' ); ?></p>
+						<h3 class="mcp100p-subhead"><?php esc_html_e( 'Tool groups', '100pixel-ai-agent-connector' ); ?></h3>
+						<p class="mcp100p-muted"><?php esc_html_e( "Choose what AI assistants can work with. Every tool also checks the connected user's WordPress permissions.", '100pixel-ai-agent-connector' ); ?></p>
 
 						<div class="mcp100p-groups">
 							<?php
 							foreach ( MCP100P_Settings::groups() as $group => $info ) :
 								$note = '';
 								if ( 'woocommerce' === $group && ! MCP100P_Tools_WooCommerce::available() ) {
-									$note = __( 'WooCommerce not active', 'agentpress-mcp' );
+									$note = __( 'WooCommerce not active', '100pixel-ai-agent-connector' );
 								} elseif ( 'abilities' === $group && ! MCP100P_Tools_Abilities::available() ) {
-									$note = __( 'Requires WordPress 6.9+', 'agentpress-mcp' );
+									$note = __( 'Requires WordPress 6.9+', '100pixel-ai-agent-connector' );
 								}
 								?>
 								<div class="mcp100p-group<?php echo $note ? ' is-unavailable' : ''; ?>">
@@ -802,7 +802,7 @@ class MCP100P_Admin {
 						</div>
 
 						<div class="mcp100p-actions">
-							<button type="submit" class="button button-primary button-hero"><?php esc_html_e( 'Save settings', 'agentpress-mcp' ); ?></button>
+							<button type="submit" class="button button-primary button-hero"><?php esc_html_e( 'Save settings', '100pixel-ai-agent-connector' ); ?></button>
 						</div>
 					</form>
 				</section>
@@ -811,13 +811,13 @@ class MCP100P_Admin {
 				<span>
 					<?php
 					/* translators: %s: plugin version */
-					echo esc_html( sprintf( __( 'AgentPress MCP %s', 'agentpress-mcp' ), MCP100P_VERSION ) );
+					echo esc_html( sprintf( __( '100pixel AI Agent Connector %s', '100pixel-ai-agent-connector' ), MCP100P_VERSION ) );
 					?>
 				</span>
 				<span aria-hidden="true">·</span>
-				<span><?php esc_html_e( 'Made by', 'agentpress-mcp' ); ?> <a href="https://100pixel.com" target="_blank" rel="noopener">100pixel.com</a></span>
+				<span><?php esc_html_e( 'Made by', '100pixel-ai-agent-connector' ); ?> <a href="https://100pixel.com" target="_blank" rel="noopener">100pixel.com</a></span>
 				<span aria-hidden="true">·</span>
-				<span><?php esc_html_e( 'Support:', 'agentpress-mcp' ); ?> <a href="mailto:agentpress@100pixel.com">agentpress@100pixel.com</a></span>
+				<span><?php esc_html_e( 'Support:', '100pixel-ai-agent-connector' ); ?> <a href="mailto:support@100pixel.com">support@100pixel.com</a></span>
 			</footer>
 		</div>
 		<?php

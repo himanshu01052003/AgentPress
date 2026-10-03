@@ -2,7 +2,7 @@
 /**
  * Remove plugin data on uninstall.
  *
- * @package AgentPressMCP
+ * @package Mcp100p
  */
 
 defined( 'WP_UNINSTALL_PLUGIN' ) || exit;

@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/agentpress-icon.svg" alt="AgentPress MCP" width="128" height="128">
+  <img src="assets/mcp100p-icon.svg" alt="100pixel AI Agent Connector" width="128" height="128">
 </p>
 
-<h1 align="center">AgentPress MCP</h1>
+<h1 align="center">100pixel AI Agent Connector</h1>
 
 <p align="center">
   <strong>Connect Claude, ChatGPT &amp; AI agents to WordPress &amp; WooCommerce.</strong><br>
@@ -18,7 +18,7 @@
 
 ---
 
-AgentPress MCP adds a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server to WordPress. Once it's installed, AI assistants such as **Claude, ChatGPT, Cursor, VS Code Copilot, Gemini CLI and Windsurf** can work on your site for you: write and publish posts, upload images, change settings, manage plugins and run your WooCommerce store.
+100pixel AI Agent Connector adds a [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server to WordPress. Once it's installed, AI assistants such as **Claude, ChatGPT, Cursor, VS Code Copilot, Gemini CLI and Windsurf** can work on your site for you: write and publish posts, upload images, change settings, manage plugins and run your WooCommerce store.
 
 Every action runs as the WordPress user who owns the API key, so an AI agent can never do more than that user is allowed to do.
 
@@ -37,7 +37,7 @@ Every action runs as the WordPress user who owns the API key, so an AI agent can
 
 1. Download the latest zip from [100pixel.com/plugins/agentpress-mcp](https://100pixel.com/plugins/agentpress-mcp).
 2. In WordPress, go to **Plugins → Add New → Upload Plugin**, upload the zip and activate it.
-3. Open **AgentPress** in the admin menu and click **Generate key**.
+3. Open **AI Agent Connector** in the admin menu and click **Generate key**.
 4. Pick your AI app. The plugin shows step-by-step instructions with your key and site URL already filled in.
 
 ## Connecting your AI app
@@ -45,7 +45,7 @@ Every action runs as the WordPress user who owns the API key, so an AI agent can
 The server URL is:
 
 ```
-https://your-site.com/wp-json/agentpress/v1/mcp
+https://your-site.com/wp-json/mcp100p/v1/mcp
 ```
 
 Send your API key in one of three ways:
@@ -54,7 +54,7 @@ Send your API key in one of three ways:
 |---|---|
 | `Authorization: Bearer YOUR_API_KEY` header | Claude Code, Cursor, VS Code, Gemini CLI, Windsurf |
 | `X-API-Key: YOUR_API_KEY` header | Hosts that strip the Authorization header |
-| Key in the URL: `…/wp-json/agentpress/v1/mcp/YOUR_API_KEY` | Claude (web & desktop) and ChatGPT, which can't send custom headers. Admins can turn this off. |
+| Key in the URL: `…/wp-json/mcp100p/v1/mcp/YOUR_API_KEY` | Claude (web & desktop) and ChatGPT, which can't send custom headers. Admins can turn this off. |
 
 <details>
 <summary><strong>Claude (web &amp; desktop)</strong></summary>
@@ -72,7 +72,7 @@ Open **Plugins**, click **Add**, choose **Create MCP app**, enter a name and des
 <summary><strong>Claude Code</strong></summary>
 
 ```bash
-claude mcp add --transport http wordpress https://your-site.com/wp-json/agentpress/v1/mcp --header "Authorization: Bearer YOUR_API_KEY"
+claude mcp add --transport http wordpress https://your-site.com/wp-json/mcp100p/v1/mcp --header "Authorization: Bearer YOUR_API_KEY"
 ```
 </details>
 
@@ -85,7 +85,7 @@ Add to `~/.cursor/mcp.json` or `.cursor/mcp.json` in your project:
 {
   "mcpServers": {
     "wordpress": {
-      "url": "https://your-site.com/wp-json/agentpress/v1/mcp",
+      "url": "https://your-site.com/wp-json/mcp100p/v1/mcp",
       "headers": { "Authorization": "Bearer YOUR_API_KEY" }
     }
   }
@@ -103,7 +103,7 @@ Add to `.vscode/mcp.json` in your workspace:
   "servers": {
     "wordpress": {
       "type": "http",
-      "url": "https://your-site.com/wp-json/agentpress/v1/mcp",
+      "url": "https://your-site.com/wp-json/mcp100p/v1/mcp",
       "headers": { "Authorization": "Bearer YOUR_API_KEY" }
     }
   }
@@ -120,7 +120,7 @@ Add to `~/.gemini/settings.json`:
 {
   "mcpServers": {
     "wordpress": {
-      "httpUrl": "https://your-site.com/wp-json/agentpress/v1/mcp",
+      "httpUrl": "https://your-site.com/wp-json/mcp100p/v1/mcp",
       "headers": { "Authorization": "Bearer YOUR_API_KEY" }
     }
   }
@@ -137,7 +137,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 {
   "mcpServers": {
     "wordpress": {
-      "serverUrl": "https://your-site.com/wp-json/agentpress/v1/mcp",
+      "serverUrl": "https://your-site.com/wp-json/mcp100p/v1/mcp",
       "headers": { "Authorization": "Bearer YOUR_API_KEY" }
     }
   }
@@ -149,7 +149,7 @@ Add to `~/.codeium/windsurf/mcp_config.json`:
 <summary><strong>Test with curl</strong></summary>
 
 ```bash
-curl -s https://your-site.com/wp-json/agentpress/v1/mcp \
+curl -s https://your-site.com/wp-json/mcp100p/v1/mcp \
   -H "Content-Type: application/json" \
   -H "Accept: application/json, text/event-stream" \
   -H "X-API-Key: YOUR_API_KEY" \
@@ -215,7 +215,7 @@ You can also register a WordPress Ability (Abilities API, WordPress 6.9+) with `
 
 ## Support
 
-Need help connecting the plugin to your AI / LLM? Email **[agentpress@100pixel.com](mailto:agentpress@100pixel.com)**.
+Need help connecting the plugin to your AI / LLM? Email **[support@100pixel.com](mailto:support@100pixel.com)**.
 
 Found a bug or have an idea? [Open an issue](https://github.com/himanshu01052003/AgentPress/issues).
 
