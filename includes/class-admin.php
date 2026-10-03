@@ -367,6 +367,7 @@ class MCP100P_Admin {
 			'y'              => true,
 			'width'          => true,
 			'height'         => true,
+			'class'          => true,
 		);
 		return array(
 			'svg'     => array(
@@ -391,6 +392,8 @@ class MCP100P_Admin {
 	 * Print a bundled SVG safely.
 	 */
 	private static function print_svg( $svg ) {
+		// The icon file carries its own <style> for standalone use; here admin.css animates it instead.
+		$svg = preg_replace( '#<style[^>]*>.*?</style>#s', '', $svg );
 		echo wp_kses( $svg, self::svg_allowed() );
 	}
 

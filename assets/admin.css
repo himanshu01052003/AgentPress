@@ -88,6 +88,42 @@
 	height: 100%;
 }
 
+/* Icon animation: dashes travel along the links, the outer nodes pulse in turn. */
+.mcp100p-hero__icon .mcp100p-flow path {
+	stroke-dasharray: 4 17;
+	animation: mcp100p-flow 1.4s linear infinite;
+}
+
+.mcp100p-hero__icon .mcp100p-pulse {
+	transform-box: fill-box;
+	transform-origin: center;
+	animation: mcp100p-pulse 2.4s ease-in-out infinite;
+}
+
+.mcp100p-hero__icon .mcp100p-core {
+	animation: mcp100p-core 1.6s ease-in-out infinite;
+}
+
+.mcp100p-hero__icon .mcp100p-d1 { animation-delay: 0.4s; }
+.mcp100p-hero__icon .mcp100p-d2 { animation-delay: 0.8s; }
+.mcp100p-hero__icon .mcp100p-d3 { animation-delay: 1.2s; }
+.mcp100p-hero__icon .mcp100p-d4 { animation-delay: 1.6s; }
+.mcp100p-hero__icon .mcp100p-d5 { animation-delay: 2s; }
+
+@keyframes mcp100p-flow {
+	to { stroke-dashoffset: -21; }
+}
+
+@keyframes mcp100p-pulse {
+	0%, 100% { transform: scale(1); opacity: 1; }
+	50% { transform: scale(0.55); opacity: 0.55; }
+}
+
+@keyframes mcp100p-core {
+	0%, 100% { opacity: 1; }
+	50% { opacity: 0.3; }
+}
+
 .mcp100p-byline {
 	display: inline-block;
 	margin-top: 4px;
@@ -1184,5 +1220,14 @@
 	.mcp100p *,
 	.mcp100p *::after {
 		transition: none !important;
+	}
+
+	.mcp100p-hero__icon .mcp100p-flow {
+		display: none;
+	}
+
+	.mcp100p-hero__icon .mcp100p-pulse,
+	.mcp100p-hero__icon .mcp100p-core {
+		animation: none;
 	}
 }
