@@ -35,7 +35,7 @@ Every action runs as the WordPress user who owns the API key, so an AI agent can
 
 ## Installation
 
-1. Download the latest zip from [100pixel.com/plugins/agentpress-mcp](https://100pixel.com/plugins/agentpress-mcp).
+1. Download the latest zip from [100pixel.com/plugins/100pixel-ai-agent-connector](https://100pixel.com/plugins/100pixel-ai-agent-connector).
 2. In WordPress, go to **Plugins → Add New → Upload Plugin**, upload the zip and activate it.
 3. Open **AI Agent Connector** in the admin menu and click **Generate key**.
 4. Pick your AI app. The plugin shows step-by-step instructions with your key and site URL already filled in.
